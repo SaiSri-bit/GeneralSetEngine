@@ -5,12 +5,14 @@ class grph(Object):
     def __init__(self,vertexs:Set, edges:list):
         # Store all the vertex in a list. This will help keep track of them if they are needed later
         # Do the same with the edges.
-        self.vertexs = vertexs.getSet
+        self.vertexs = vertexs.getSet()
         self.edges = edges
 
         # The purpose of the label keys is to act as a map between the actual index and their placement
         # in the adjaceny matrix. This allows for seamless transitions when doing calculations with the
         # graph and the element in the set may not be actually representative of its index in the matrix
+        # Using just the fact that an index increments can also be used, but a map allows for more dynamic
+        # flexibility down the line if its needed.
         self.labelkeys:dict = {} 
         for index in range(len(self.vertexs)):
             self.labelkeys.update({self.vertexs[index]:index})
@@ -29,12 +31,14 @@ class grph(Object):
         # characters are alled to be in the set. This means that the start and stop can be properly mapped in
         # the index. On the other hand, weigth has to be viewed as a int or float to not cause problems later
         for value in edges:
-            if type(value)!=tuple:
+            if not isinstance(value,tuple):
                 raise TypeError("List of edges contains nontuples")
             if len(value) != 3:
                 raise TypeError("Format should be Vertex_1 Vertex_2 Edge_Weigth")
-            if type(value[3]) != int or type(value[3]) !=float:
+            if not isinstance(value[2], (int, float)):
                 raise TypeError ("Edge Weight must be int or float")
+            if value[1] not in self.vertexs or value[0] not in self.vertexs: 
+                raise ValueError("Edge vertex cannot not be found in list of vertexs")
             index1 = self.labelkeys.get(value[0])
             index2 = self.labelkeys.get(value[1])
             matrix[index1][index2] = value[2]
@@ -76,22 +80,46 @@ class grph(Object):
         
 
     def add_edge (self,edge:tuple):
+        # First check and make sure that it is a valid edge that can be added
         if len(edge)!=3:
             raise ValueError("Edge Tuple can only contain 3 elements, start stop weight")
-        if type(edge[2]) != int or type(edge[2]) != float:
+        if not isinstance(edge[2], (int, float)):
             raise TypeError("The type of the edge weight must be an int or float")
+        if edge[1] not in self.vertexs or edge[0] not in self.vertexs: 
+            raise ValueError("Edge vertex cannot not be found in list of vertexs")
+        
+        # Repeat the usual process of accessesing the indexes associated with the edge and then
+        # adding the apppropriate spot on the matrix.
         index1=self.labelkeys.get(edge[0])
         index2=self.labelkeys.get(edge[1])
         self.X[index1][index2]=edge[2]
         self.edges.append(edge)
 
-    def dijkstra(self,source,stop):
-        pass
 
     def bfs(self,source,stop):
         queue = []
         startIndex = self.labelkeys.get(source)
         stopIndex = self.labelkeys.get(stop)
+        seen = []
+        distance = []
+        for val in range(len(self.vertexs)):
+            seen.append(-1)
+            distance.append(0)
+        queue.append(startIndex)
+        distanceFromStart = 0
+        while len(queue)!=0:
+            index = queue.pop(0)
+            location = 0
+            for val in self.X[index]:
+                if val !=0:
+                    if seen == -1:
+                        if location == stopIndex: 
+                            return distanceFromStart
+                        queue.append(location)
+                        seen[location] = 1
+                        distance[location] = distanceFromStart
+                location = location+1
+            distanceFromStart = distanceFromStart + 1
 
 
     def cycleChecker(self):
@@ -103,6 +131,8 @@ class grph(Object):
     def maxFlow(self):
         pass
 
+    def dijkstra(self,source,stop):
+        pass
 
 
 class grphHomomorphism(Morphism):
