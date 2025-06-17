@@ -3,7 +3,14 @@ import random
 
 class vectk(object):
     def __init__(self,elements:Set,additiveIdentity:tuple):
+        n = len(elements[0])
+        for element in elements:
+            if not isinstance(element,tuple):
+                raise TypeError("All elemnts within the vector space should be a tuple")
+            if len(element)!=n:
+                raise TypeError("All elements should be of the same length")
         self.X = elements
+        self.n = n
         self.aidentity = additiveIdentity
         self.midentity = 1
         if not self.verify():
