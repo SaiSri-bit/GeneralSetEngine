@@ -72,10 +72,11 @@ class grp(Object):
             count = 0
             while not check:
                 if self.operation.apply(element1,self.X[count]) == identity:
-                    break
+                    check = True
                 count = count + 1 
                 if count == len(self.X):
                     return False
+        return True
 
 
     def verify_closed(self):
