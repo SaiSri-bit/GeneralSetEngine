@@ -34,6 +34,13 @@ class ring(Object):
                     if self.operation2.apply(self.operation2.apply(element1,element2),element3) != self.operation2.apply(element1,self.operation2.apply(element2,element3)):
                         return False 
         return True  
+    
+    def returnObject(self):
+        object = []
+        object.append(self.X)
+        object.append(self.operation1)
+        object.append(self.operation2)
+        return object
 
 
 

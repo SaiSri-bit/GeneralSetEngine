@@ -6,6 +6,8 @@
 class Object:
     def __init__(self,X):
         self.X = X
+    def returnObject(self):
+        return self.X
 
 # Morphisms are essentially maps from one set of objects to another set of objects
 class Morphism:

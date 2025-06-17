@@ -1,7 +1,8 @@
 from Set import Set, function
+from Category import Object
 import random
 
-class vectk(object):
+class vectk(Object):
     def __init__(self,elements:Set,additiveIdentity:tuple):
         n = len(elements[0])
         for element in elements:
@@ -101,6 +102,9 @@ class vectk(object):
         for index in range(len(vector1)):
             resultvector.append(vector1[index]*scalar1)
         return resultvector
+    
+    def returnObject(self):
+        return super().returnObject()
     
 class linearMaps(function):
     pass

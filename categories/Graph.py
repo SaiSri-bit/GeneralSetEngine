@@ -133,7 +133,9 @@ class grph(Object):
 
     def dijkstra(self,source,stop):
         pass
-
+    
+    def returnObject(self):
+        return super().returnObject()
 
 class grphHomomorphism(Morphism):
     pass

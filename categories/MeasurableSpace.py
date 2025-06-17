@@ -39,6 +39,11 @@ class meas(Object):
 
         return True
 
+    def returnObject(self):
+        object = []
+        object.append(self.X)
+        object.append(self.sigma_algebra)
+        return object
 
 class measure(function):
     def __init__(self, map):

@@ -1,6 +1,6 @@
 from Set import Set, function
-
-class top(object):
+from Category import Object
+class top(Object):
     def __init__(self,elements:Set, topology:Set):
         self.X = elements # The underlying set should saved seperately from the topology
         self.topology = topology # The topology which the feature added by a topological space should be stored
@@ -33,6 +33,12 @@ class top(object):
                     return False
 
         return True
+
+    def returnObject(self):
+        object = []
+        object.append(self.X)
+        object.append(self.topology)
+        return object
 
 class continuousFunction(function):
     pass

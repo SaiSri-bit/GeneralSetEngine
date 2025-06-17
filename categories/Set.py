@@ -59,6 +59,9 @@ class Set(Object):
             raise TypeError("Argument must be an instance of Set.")
         return Set(list(set(self.X).intersection(set(Y.getSet()))))
     
+    def returnObject(self):
+        return super().returnObject()
+    
 
 class function(Morphism):
     def __init__(self, map:dict):

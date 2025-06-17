@@ -115,6 +115,12 @@ class grp(Object):
                 if self.operation.apply(element1,element2) != self.operation.apply(element2,element1):
                     return False 
         return True
+    
+    def returnObject(self):
+        object = []
+        object.append(self.X)
+        object.append(self.operation)
+        return object
 
 class grpHomomorphism(Morphism):
     pass
