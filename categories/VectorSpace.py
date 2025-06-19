@@ -1,5 +1,5 @@
-from Set import Set, function
-from Category import Object
+from .Set import Set, function
+from .Category import Object
 import random
 
 class vectk(Object):

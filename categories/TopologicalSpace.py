@@ -1,5 +1,5 @@
-from Set import Set, function
-from Category import Object
+from .Set import Set, function
+from .Category import Object
 class top(Object):
     def __init__(self,elements:Set, topology:Set):
         self.X = elements # The underlying set should saved seperately from the topology

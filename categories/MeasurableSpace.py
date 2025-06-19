@@ -1,5 +1,5 @@
-from Set import Set, function
-from Category import Object,Morphism
+from .Set import Set, function
+from .Category import Object,Morphism
 
 class meas(Object):
     def __init__(self, elements:Set, sigma_algebra, measure):

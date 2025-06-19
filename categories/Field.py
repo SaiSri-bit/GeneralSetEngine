@@ -1,4 +1,4 @@
-from Category import Object,Morphism
+from .Category import Object,Morphism
 
 class field(Object):
     pass

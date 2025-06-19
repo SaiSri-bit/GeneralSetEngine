@@ -1,4 +1,4 @@
-from Category import Object,Morphism
+from .Category import Object,Morphism
 
 class Set(Object):
     def __init__(self, X:list):

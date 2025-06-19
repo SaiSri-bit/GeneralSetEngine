@@ -1,5 +1,6 @@
 import unittest
 from categories.Category import Category
+from categories.Set import Set
 from categories.Graph import grph
 from categories.Group import grp
 from categories.TopologicalSpace import top

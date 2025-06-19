@@ -1,6 +1,6 @@
-from Category import Object
-from Set import Set
-from Group import grp,grpHomomorphism, Operation
+from .Category import Object
+from .Set import Set
+from .Group import grp,grpHomomorphism, Operation
 
 class ring(Object):
     def __init__(self, elements:Set, identity, operation1:Operation, operation2:Operation):

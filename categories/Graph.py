@@ -1,5 +1,5 @@
-from Set import Set, function
-from Category import Object,Morphism
+from .Set import Set, function
+from .Category import Object,Morphism
 
 class grph(Object):
     def __init__(self,vertexs:Set, edges:list):
