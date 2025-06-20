@@ -1,5 +1,6 @@
 from categories.Category import Object
-from matrix import Matrix
+from categories.Graph import grph
+
 class tensor(Object):
     ## Initialize the tensor; if there is a prexisting tensor  "data" all it to be stored in that directly
     ## if not, we need a shape to initalize a tensor with just zeros
@@ -77,4 +78,5 @@ class tensor(Object):
     def returnObject(self):
         return super().returnObject()
         
-            
+    ## TODO: Element‑wise Opperations + Broadcasting
+    ## TODO: Gradient Tracking (Requires fixing of the graph class)
