@@ -1,32 +1,34 @@
 from categories.Category import Object
 
 class Matrix(Object):
-    def __init__(self,m:int,n:int):
-        matrix = []
-        self.m = m
-        self.n = n
-        for val1 in range(m):
-            list = []
-            for val2 in range(n):
-                list.append(0)
-            matrix.append(list)
-        self.X = matrix
-
-    def __init__(self,matrix:list):
-        size = 0
-        index = 0
-        for item in matrix:
-            if not isinstance(item,list):
-                raise TypeError("Matrix Not provided")
-            if index==0:
-                size = len(item)
-            else:
-                if size!=len(item):
-                    raise ValueError("Rows are not of the same length, buffer them first")
-            index = index+1
-        self.X = matrix
-        self.m = len(matrix)
-        self.n = len(matrix[0])
+    def __init__(self,m:int=-1,n:int=-1,matrix:list=None):
+        if m != -1 and n!=-1:
+            matrix = []
+            self.m = m
+            self.n = n
+            for val1 in range(m):
+                list = []
+                for val2 in range(n):
+                    list.append(0)
+                matrix.append(list)
+            self.X = matrix
+        elif (matrix!=None):
+            size = 0
+            index = 0
+            for item in matrix:
+                if not isinstance(item,list):
+                    raise TypeError("Matrix Not provided")
+                if index==0:
+                    size = len(item)
+                else:
+                    if size!=len(item):
+                        raise ValueError("Rows are not of the same length, buffer them first")
+                index = index+1
+            self.X = matrix
+            self.m = len(matrix)
+            self.n = len(matrix[0])
+        else:
+            raise ValueError(f"An incorrect value for a matrix was given {m},{n},{matrix}")
 
     def returnMatrix(self):
         return self.X
