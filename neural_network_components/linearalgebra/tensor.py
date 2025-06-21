@@ -1,5 +1,5 @@
 from categories.Category import Object
-from categories.Graph import grph
+from categories.matrix import Matrix
 
 class tensor(Object):
     ## Initialize the tensor; if there is a prexisting tensor  "data" all it to be stored in that directly
@@ -79,4 +79,7 @@ class tensor(Object):
         return super().returnObject()
         
     ## TODO: Element‑wise Opperations + Broadcasting
+    def dot(self):
+        pass
+
     ## TODO: Gradient Tracking (Requires fixing of the graph class)
