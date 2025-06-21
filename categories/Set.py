@@ -10,7 +10,7 @@ class Set(Object):
         if len(lst)==0:
             return False
         for element in lst:
-            if not isinstance(element, (int, float, complex,list, Set)):
+            if not isinstance(element, (int, float, complex, list, Set, tuple)):
                 return True
             if isinstance(str):
                 if len(element)>1:

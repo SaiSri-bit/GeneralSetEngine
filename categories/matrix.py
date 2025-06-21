@@ -1,4 +1,4 @@
-from categories.Category import Object
+from .Category import Object
 
 class Matrix(Object):
     def __init__(self,m:int=-1,n:int=-1,matrix:list=None):
