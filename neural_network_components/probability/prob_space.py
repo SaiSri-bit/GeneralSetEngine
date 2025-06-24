@@ -1,12 +1,12 @@
 from categories.MeasurableSpace import meas
 from categories.Set import Set
+from constants import random
 class ProbSpace(meas):
     def __init__(self, elements:Set, sigma_algebra:list[list], measure:dict[list, float], R=False):
         super().__init__(elements, sigma_algebra)
         if not self._verifyMeasure():
             raise TypeError("Invalid Measure Given")
         self.measure=self._normalize_measure(measure)
-        self.randomValueSeed = 1
         self.R = R
         
     def _verifyMeasure(self,measure:dict[list,float]):
@@ -23,20 +23,10 @@ class ProbSpace(meas):
             normalizedMeasure.update(item,newMeasure)
         return normalizedMeasure
     
-    def _lcg(self, seed:int):
-        a = 1103515245
-        c = 12345
-        m = 2**31
-        self.randomValueSeed = (a * seed + c) % m
-        return self.randomValueSeed / m
-    
-    def _random(self):
-        return self._lcg(self.randomValueSeed)
-    
     def randomSample(self):
         if not self.R:
             cumulative = 0
-            rand = self._random()
+            rand = random(1.0)
             for subset, prob in self.measure.items():
                 cumulative = cumulative + prob
                 if rand<cumulative:

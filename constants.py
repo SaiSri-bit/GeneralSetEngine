@@ -29,3 +29,16 @@ def exp(x, terms=10):
         term = (x**n) / factorial(n)
         result += term
     return result
+
+def _lcg(seed:int):
+    a = 1103515245
+    c = 12345
+    m = 2**31
+    randomValueSeed = (a * seed + c) % m
+    return randomValueSeed / m
+
+def random(randomValueSeed):
+    return _lcg(randomValueSeed)
+
+def sqrt():
+    pass
