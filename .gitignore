@@ -1,4 +1,5 @@
 env/
 __pycache__/
+categories/__pycache__/
 neural_network/__pycache__/
 testing/__pycache__/
