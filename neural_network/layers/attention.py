@@ -1,5 +1,5 @@
 from constants import sqrt
-from activation import softmax
+from neural_network.activation import softmax
 from categories.matrix import Matrix
 
 class ScaledDotProductAttention:
