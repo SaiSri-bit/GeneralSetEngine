@@ -1,4 +1,3 @@
-import os
 from .Category import Object
 
 class Matrix(Object):
@@ -10,7 +9,7 @@ class Matrix(Object):
             for val1 in range(m):
                 row = []
                 for val2 in range(n):
-                    row.append(0)
+                    row.append(0.00000001)
                 matrix.append(row)
             self.X = matrix
         elif (matrix!=None):
@@ -68,6 +67,7 @@ class Matrix(Object):
                 for k in range(self.n):
                     resultMatrix[i][j] += self.X[i][k] * otherMatrix.X[k][j]
         self.X = resultMatrix
+        self.n = otherMatrix.n
     
     def deleteRow(self,index:int):
         self.X.pop(index)
@@ -114,6 +114,16 @@ class Matrix(Object):
             A = A_next.X 
         eigenvalues = [A[i][i] for i in range(self.m)]
         return eigenvalues
+    
+    def findTranspose(self):
+        transpose = []
+        for val in range(self.m):
+            row = []
+            for column in range(self.n):
+                row.append(self.X[val][column])
+            transpose.append(row)
+
+        return transpose 
 
 
 

@@ -10,5 +10,8 @@ from constants import random
 
 trainPath = "/Users/sri/Desktop/GeneralSetEngine/testing/time_series_data_test/train.csv"
 trainMatrix = importMatrix(trainPath)
-Columns = trainMatrix.X[0]
+columns = trainMatrix.X[0]
 trainMatrix.deleteRow(0)
+
+
+## The architecture that will be used is the general transformer architecture
