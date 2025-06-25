@@ -1,3 +1,4 @@
+import os
 from .Category import Object
 
 class Matrix(Object):
@@ -7,10 +8,10 @@ class Matrix(Object):
             self.m = m
             self.n = n
             for val1 in range(m):
-                list = []
+                row = []
                 for val2 in range(n):
-                    list.append(0)
-                matrix.append(list)
+                    row.append(0)
+                matrix.append(row)
             self.X = matrix
         elif (matrix!=None):
             size = 0
@@ -29,6 +30,9 @@ class Matrix(Object):
             self.n = len(matrix[0])
         else:
             raise ValueError(f"An incorrect value for a matrix was given {m},{n},{matrix}")
+    
+    def printMatrix(self):
+        print(self.X)
 
     def returnMatrix(self):
         return self.X
@@ -64,6 +68,13 @@ class Matrix(Object):
                 for k in range(self.n):
                     resultMatrix[i][j] += self.X[i][k] * otherMatrix.X[k][j]
         self.X = resultMatrix
+    
+    def deleteRow(self,index:int):
+        self.X.pop(index)
+    
+    def deleteColumn(self, index:int):
+        for i in range(self.m):
+            self.X[i].pop(index)
 
     def qrDecompose(self):
         Q = []
@@ -148,3 +159,13 @@ def verifyMatrixChain(listOfMatrix:list):
             if prevN!=currM:
                 raise ValueError("Matrix Dimensions prevents multiplication.")
 
+def importMatrix(path:str):
+    with open(f'{path}', 'r') as f:
+        newMatrix = []
+        for line in f:
+            row = []
+            items = line.split(',')
+            for item in items:
+                row.append(item)
+            newMatrix.append(row)
+    return Matrix(matrix=newMatrix)
