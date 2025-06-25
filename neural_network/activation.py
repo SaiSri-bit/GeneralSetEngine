@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from constants import exp, sin, cos, sqrt
 ## This file is similar to the constants file but it deals with the computations of activation
 ## Functions
