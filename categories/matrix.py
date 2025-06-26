@@ -1,7 +1,7 @@
 from .Category import Object
 
 class Matrix(Object):
-    def __init__(self,m:int=-1,n:int=-1,matrix:list=None):
+    def __init__(self,m:int=-1,n:int=-1,matrix:list=None,val=0):
         if m != -1 and n!=-1:
             matrix = []
             self.m = m
@@ -9,7 +9,7 @@ class Matrix(Object):
             for val1 in range(m):
                 row = []
                 for val2 in range(n):
-                    row.append(0.00000001)
+                    row.append(val)                        
                 matrix.append(row)
             self.X = matrix
         elif (matrix!=None):

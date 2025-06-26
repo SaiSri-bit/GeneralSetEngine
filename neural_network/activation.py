@@ -11,3 +11,7 @@ def softmax(x: list[float]) -> list[float]:
     exps = [exp(v) for v in x]
     s = sum(exps)
     return [v/s for v in exps]
+
+#ReLU function
+def ReLU(x:list[float])-> list[float]:
+    return [max(0,h) for h in x]

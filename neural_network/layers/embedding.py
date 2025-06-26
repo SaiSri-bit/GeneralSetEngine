@@ -25,7 +25,7 @@ class PositionalEncoding(Object):
     def __init__(self, max_len: int, d_model: int):
         super().__init__(None)
         ## precompute pe[pos][i]
-        self.pe = Matrix(m=max_len,n=d_model)        
+        self.pe = Matrix(m=max_len,n=d_model, val=0.01)        
         for pos in range(max_len):
             for i in range(0, d_model, 2):
                 self.pe.X[pos][i]   = sin(pos / (10000 ** (i / d_model)))

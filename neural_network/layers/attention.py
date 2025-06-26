@@ -42,17 +42,17 @@ class MultiHeadAttention:
         self.d_k = d_model // num_heads
 
         # initialize per-head linear projections as weight matrices
-        self.Wq = [Matrix(m=d_model, n=d_model) for _ in range(num_heads)]
-        self.Wk = [Matrix(m=d_model, n=d_model) for _ in range(num_heads)]
-        self.Wv = [Matrix(m=d_model, n=d_model) for _ in range(num_heads)]
-        self.Wo = Matrix(m=d_model, n=d_model)
+        self.Wq = Matrix(m=d_model, n=num_heads,val=0.01)
+        self.Wk = Matrix(m=d_model, n=num_heads,val=0.01) 
+        self.Wv = Matrix(m=d_model, n=num_heads,val=0.01) 
+        self.Wo = Matrix(m=d_model, n=num_heads,val=0.01)
         self.dot = ScaledDotProductAttention()
 
-    def _linear(self, X:Matrix, W:Matrix):
+    def _linear(self, X:Matrix, W:Matrix)-> Matrix:
         # X: list of T vectors (d_model), W: d_model×d_model
         return matrixMultiply(X,W)
 
-    def forward(self, X:Matrix, mask=None):
+    def forward(self, X:Matrix, mask=None) -> Matrix:
         # 1. project X to Q,K,V for each head
         heads_output = []
         for h in range(self.num_heads):
