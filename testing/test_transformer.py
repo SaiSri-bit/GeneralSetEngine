@@ -10,8 +10,34 @@ from constants import random
 
 trainPath = "/Users/sri/Desktop/GeneralSetEngine/testing/time_series_data_test/train.csv"
 trainMatrix = importMatrix(trainPath)
-columns = trainMatrix.X[0]
+print(f'{trainMatrix.m} x {trainMatrix.n}')
+
+
+trainMatrix.deleteColumn(0)
 trainMatrix.deleteRow(0)
 
+data = []
+for rowM in trainMatrix.X:
+    rowA = []
+    for item in rowM:
+        rowA.append(float(item))
+    data.append(rowA)
 
-## The architecture that will be used is the general transformer architecture
+src_list = data[:-1]
+tgt_list = data[1:]
+
+src = Matrix(matrix=src_list)
+tgt = Matrix(matrix=tgt_list)
+
+num_layers = 2
+d_model = src.n
+num_heads = 1
+d_ff = d_model*2
+transformer = Transformer(num_layers,d_model,num_heads,d_ff)
+
+out = transformer.forward(src,tgt)
+
+predicted_seq = out.X
+
+for i, (actual_row, pred_row) in enumerate(zip(tgt_list, predicted_seq)):
+        print(f"{i}\t{actual_row}\t{pred_row}")

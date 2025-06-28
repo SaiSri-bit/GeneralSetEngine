@@ -28,7 +28,7 @@ class Matrix(Object):
             self.m = len(matrix)
             self.n = len(matrix[0])
         else:
-            raise ValueError(f"An incorrect value for a matrix was given {m},{n},{matrix}")
+            raise ValueError(f"An incorrect value for a matrix was given")
     
     def printMatrix(self):
         print(self.X)
@@ -44,16 +44,16 @@ class Matrix(Object):
         if self.m!=otherMatrixM or self.n!=otherMatrixN:
             raise ValueError("The two matrix sizes should be the same")
         resultMatrix = []
-        for row in self.X:
+        for row in range(self.m):
             resultRow = []
-            for column in self.X[row]:
-                resultRow.append(self.X[row][column]+matrix[row][column])
+            for column in range(self.n):
+                resultRow.append(self.X[row][column]+matrix.X[row][column])
             resultMatrix.append(resultRow)
         self.X = resultMatrix
 
     def matrixMultiply(self,otherMatrix:'Matrix'):
         matrixChain = []
-        matrixChain.append(self.X)
+        matrixChain.append(Matrix(matrix=self.X))
         matrixChain.append(otherMatrix)
         verifyMatrixChain(matrixChain)
         resultMatrix = []
@@ -71,10 +71,12 @@ class Matrix(Object):
     
     def deleteRow(self,index:int):
         self.X.pop(index)
+        self.m = self.m-1
     
     def deleteColumn(self, index:int):
         for i in range(self.m):
             self.X[i].pop(index)
+        self.n=self.n-1
 
     def qrDecompose(self):
         Q = []
@@ -117,12 +119,11 @@ class Matrix(Object):
     
     def findTranspose(self):
         transpose = []
-        for val in range(self.m):
+        for column in range(self.n):
             row = []
-            for column in range(self.n):
+            for val in range(self.m):
                 row.append(self.X[val][column])
             transpose.append(row)
-
         return transpose 
 
 
@@ -160,14 +161,14 @@ def matrixChainMultiply(listOfMatrix:list):
 
 def verifyMatrixChain(listOfMatrix:list):
     for index in range(len(listOfMatrix)):
-        if not isinstance(listOfMatrix[index],'Matrix'):
+        if not isinstance(listOfMatrix[index],Matrix):
             raise TypeError("Only two matrix can be combined")
         if index !=0:
             prev = index-1
             prevM,prevN = listOfMatrix[prev].matirxDimensions()
             currM,currN = listOfMatrix[index].matirxDimensions()
             if prevN!=currM:
-                raise ValueError("Matrix Dimensions prevents multiplication.")
+                raise ValueError(f'Matrix Dimensions prevents multiplication.{prevM}x{prevN} vs {currM}x{currN} ')
 
 def importMatrix(path:str):
     with open(f'{path}', 'r') as f:

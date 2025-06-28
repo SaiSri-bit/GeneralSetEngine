@@ -53,14 +53,15 @@ class EncoderLayer:
     def forward(self, x_seq:Matrix, mask=None):
         # Self‐attention + add & norm
         attn_out = self.self_attn.forward(x_seq, mask)
-        added_matrix = Matrix(matrix=attn_out.X)
+        added_matrix = Matrix(matrix=attn_out)
         added_matrix.matrixAddition(x_seq)
         normailze_matrix = []
-        for row in range(added_matrix.m):
+        for row in added_matrix.X:
             normailze_matrix.append(layer_norm(row))
         x_seq = Matrix(matrix=normailze_matrix)
         ff_out = self.ff.forward(x_seq)
-        return ff_out.matrixAddition(x_seq)
+        ff_out.matrixAddition(x_seq)
+        return ff_out
         # added_matrix = Matrix(matrix=[
         #     [x_seq.X[t][i] + attn_out.X[t][i] for i in range(x_seq.n)]
         #     for t in range(x_seq.m)
@@ -88,7 +89,7 @@ class DecoderLayer:
 
     def forward(self, tgt_seq:Matrix, enc_seq:Matrix, tgt_mask=None, memory_mask=None):
         # Masked self-attn
-        added_matrix = self.self_attn.forward(tgt_seq, tgt_mask)
+        added_matrix = Matrix(matrix=self.self_attn.forward(tgt_seq, tgt_mask))
         added_matrix.matrixAddition(tgt_seq)
 
         normalizeMatrix = []
@@ -100,7 +101,7 @@ class DecoderLayer:
         # Cross-attnetion
         tgt_seq_and_enc_seq = tgt_seq
         tgt_seq_and_enc_seq.matrixAddition(enc_seq)
-        added_matrixM2 = self.cross_attn.forward(tgt_seq_and_enc_seq, memory_mask)
+        added_matrixM2 = Matrix(matrix=self.cross_attn.forward(tgt_seq_and_enc_seq, memory_mask))
         added_matrixM2.matrixAddition(tgt_seq)
         normalizeMatrix=[]
         for row in range(added_matrixM2.m):
@@ -136,7 +137,7 @@ class Transformer:
         self.dec_layers = [DecoderLayer(d_model, num_heads, d_ff)
                            for _ in range(num_layers)]
 
-    def encode(self, src, src_mask=None):
+    def encode(self, src:Matrix, src_mask=None):
         x = src
         for layer in self.enc_layers:
             x = layer.forward(x, src_mask)
@@ -148,6 +149,6 @@ class Transformer:
             y = layer.forward(y, memory, tgt_mask, memory_mask)
         return y
 
-    def forward(self, src, tgt, src_mask=None, tgt_mask=None, memory_mask=None):
+    def forward(self, src:Matrix, tgt:Matrix, src_mask=None, tgt_mask=None, memory_mask=None):
         memory = self.encode(src, src_mask)
         return self.decode(tgt, memory, tgt_mask, memory_mask)

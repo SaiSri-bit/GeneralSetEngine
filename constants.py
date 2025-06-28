@@ -40,5 +40,12 @@ def _lcg(seed:int):
 def random(randomValueSeed):
     return _lcg(randomValueSeed)
 
-def sqrt():
-    pass
+def sqrt(value, level=10):
+    if value < 0:
+        raise ValueError("Cannot compute square root of a negative number.")
+    if value == 0:
+        return 0
+    x = value / 2  
+    for _ in range(level):
+        x = 0.5 * (x + value / x)
+    return x
