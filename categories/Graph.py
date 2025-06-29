@@ -11,7 +11,8 @@ class grph(Object):
 
         ## Initialize a matrix which will hold the weights
         size = len(vertexs)
-        self.X = Matrix(size,size)
+        setupMatrix = Matrix(size,size)
+        self.X = setupMatrix.X
 
         ## Go through each edge and store the third value as the weight of the edge
         for edge in edges.getSet():
