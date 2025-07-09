@@ -34,3 +34,14 @@ class IdentityMorphism(Morphism):
 class Functors (Morphism):
     def forget(self):
         pass
+
+class Operation:
+    # For the case of simplicity, any operations should be a callable function. This will allow
+    # us to be able to conduct operations within the group
+    def __init__(self, op_func):
+        if not callable(op_func):
+            raise TypeError("Operation must be a callable function.")
+        self.op_func = op_func
+
+    def apply(self, a, b):
+        return self.op_func(a, b)

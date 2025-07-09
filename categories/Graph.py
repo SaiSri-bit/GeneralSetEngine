@@ -1,6 +1,6 @@
 from .Set import Set, function
 from .Category import Object,Morphism
-from matrix import Matrix
+from .matrix import Matrix
 class grph(Object):
     def __init__(self,vertexs:Set, edges:Set):
         ## Verify that the edges given are valid in relation to the vertex

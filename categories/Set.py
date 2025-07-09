@@ -12,7 +12,7 @@ class Set(Object):
         for element in lst:
             if not isinstance(element, (int, float, complex, list, Set, tuple)):
                 return True
-            if isinstance(str):
+            if isinstance(element,str):
                 if len(element)>1:
                     return True
         return False
@@ -85,3 +85,9 @@ class function(Morphism):
         if len(self.codomain)==len(set(self.codomain)):
             return True
         return False
+    
+
+class ZFCSet(Object):
+    def __init__(self, X:list):
+        if not self.verify():
+            raise TypeError("Does not match the criteria for ZFC Axioms")

@@ -1,20 +1,8 @@
 from .Set import Set, function
-from .Category import Object,Morphism
+from .Category import Object,Morphism, Operation
 
 # A Group as an object caan be viewed as a set followed with an operation that follow as a certain
 # set of laws described below. To implement this, we should first define what an operation can be
-
-
-class Operation:
-    # For the case of simplicity, any operations should be a callable function. This will allow
-    # us to be able to conduct operations within the group
-    def __init__(self, op_func):
-        if not callable(op_func):
-            raise TypeError("Operation must be a callable function.")
-        self.op_func = op_func
-
-    def apply(self, a, b):
-        return self.op_func(a, b)
 
         
 class grp(Object):
@@ -24,7 +12,7 @@ class grp(Object):
             raise TypeError("Identity Element is missing from set")
         
         # Then store the appropariate variables
-        self.X = elements # The set of elements is the main thing being stored
+        self.X = elements.X # The set of elements is the main thing being stored
         self.operation = operation # Store the operation as another variable to be called later
         self.identity = identity # The identity element is one of the most important elements and should be stored seperately
 
@@ -51,6 +39,7 @@ class grp(Object):
             for element2 in self.X:
                 for element3 in self.X:
                     if self.operation.apply(self.operation.apply(element1,element2),element3) != self.operation.apply(element1,self.operation.apply(element2,element3)):
+                        print("Failed Associative")
                         return False 
         return True
 
@@ -60,6 +49,7 @@ class grp(Object):
         # results in the starting element for all elements in the set
         for element in self.X:
             if not (self.operation.apply(element, identity) == element and self.operation.apply(identity, element) == element):
+                print("Failed Identity")
                 return False
         return True
     
@@ -71,11 +61,12 @@ class grp(Object):
             check = False
             count = 0
             while not check:
+                if count == len(self.X):
+                    print("Failed Inverse")
+                    return False
                 if self.operation.apply(element1,self.X[count]) == identity:
                     check = True
                 count = count + 1 
-                if count == len(self.X):
-                    return False
         return True
 
 
@@ -85,6 +76,7 @@ class grp(Object):
         for a in self.X:
             for b in self.X:
                 if self.operation.apply(a, b) not in self.X:
+                    print(f"Failed Closure: {self.operation.apply(a, b)}")
                     return False
         return True
     

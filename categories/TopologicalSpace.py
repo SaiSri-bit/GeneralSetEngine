@@ -2,7 +2,7 @@ from .Set import Set, function
 from .Category import Object
 class top(Object):
     def __init__(self,elements:Set, topology:list[list]):
-        self.X = elements # The underlying set should saved seperately from the topology
+        self.X = elements.X # The underlying set should saved seperately from the topology
         self.topology = topology # The topology which the feature added by a topological space should be stored
         if not self.verifyTopology():
             raise ValueError("Topology not valid for given underlying set")
@@ -14,7 +14,7 @@ class top(Object):
             return False
         
         # Check to see the entire underlying set is in the topology
-        if [].append(self.X) not in self.topology:
+        if self.X not in self.topology:
             print ("Underlying set is not within the topology")
             return False
 
