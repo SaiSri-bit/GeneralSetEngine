@@ -3,7 +3,7 @@ from .Category import Object,Morphism
 
 class meas(Object):
     def __init__(self, elements:Set, sigma_algebra:list[list]):
-        self.X = elements
+        self.X = elements.X
         self.sigma_algebra = sigma_algebra
         self.verifySigma_Algebra()
 

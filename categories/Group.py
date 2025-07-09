@@ -1,8 +1,8 @@
 from .Set import Set, function
-from .Category import Object,Morphism, Operation
+from .Category import Object,Morphism,Operation
 
 # A Group as an object caan be viewed as a set followed with an operation that follow as a certain
-# set of laws described below. To implement this, we should first define what an operation can be
+# set of laws described below. 
 
         
 class grp(Object):
