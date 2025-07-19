@@ -125,9 +125,95 @@ class Matrix(Object):
                 row.append(self.X[val][column])
             transpose.append(row)
         return transpose 
+    
+    def row_echelon_form(self):
+        newMatrix = self.X.copy()
+        # Start from the left most column
+        leadRow = 0
+        for columnIndex in range(self.n):
+            # Check to see if we have gone through the entire matrix, if so return the matrix
+            if leadRow>=self.m: return Matrix(matrix=newMatrix)
+            # Find the smallest nonzero value which will be used as pivot
+            smallVal = 1999999
+            pivot = -1
+            for rowIndex in range(self.m):
+                if rowIndex<leadRow:
+                    continue
+                if (newMatrix[rowIndex][columnIndex]<smallVal) and (abs(newMatrix[rowIndex][columnIndex])>0):
+                    smallVal = newMatrix[rowIndex][columnIndex] # Store the value that we will be dealing with
+                    pivot = rowIndex # Store the pivot row
+
+            # If the entire column is all 0's we should just skip the column and move to the next column
+            if pivot == -1:
+                leadRow = leadRow+1
+                continue
+
+            # Check to see if the pivot is in the right position based on going down row by row
+            # If it is not, swap the leadRow with the row that we are using as a pivot
+            if leadRow!=pivot:
+                currentRow = newMatrix[leadRow]
+                pivotRow = newMatrix[pivot]
+                newMatrix[leadRow]=pivotRow
+                newMatrix[pivot]=currentRow
+                pivot = leadRow
+
+            # Algorithmically reduce the row such that the leading value is 1
+            for pivotColumnIndex in range(self.n):
+                newMatrix[pivot][pivotColumnIndex]=newMatrix[pivot][pivotColumnIndex]/smallVal
+            
+            for rowIndex in range(0,self.m):
+                leadingVal = newMatrix[rowIndex][columnIndex]
+                if (rowIndex == leadRow) or (abs(leadingVal) < 1e-12):
+                    continue
+                cloned = newMatrix[pivot].copy()
+                for column in range(self.n):
+                    cloned[column]= cloned[column]*leadingVal
+                for column in range(self.n):
+                    newMatrix[rowIndex][column]=newMatrix[rowIndex][column]-cloned[column]
+            leadRow = leadRow+1
+
+    def rank(self):
+        ref = self.row_echelon_form()
+        r = 0
+        for row in ref.X:
+            if any(abs(x) > 1e-10 for x in row):
+                r=r+1
+        return r
+    
+    def nullity(self):
+        return self.n-self.rank()
+    
+    def kernal_basis(self):
+        ref = self.row_echelon_form()
+        pivot_col=[]
+        for r in range(self.m):
+            for c in range(self.n):
+                if abs(ref.X[r][c])>1e-10:
+                    pivot_col.append(c)
+                    break
+        free_vars=[]
+        for c in range(self.n):
+            if c not in pivot_col:
+                free_vars.append(c)
+        basis=[]
+        for free_var in free_vars:
+            vec=[0]*self.n
+            vec[free_var]=1
+            for r in range(self.m-1,-1,-1):
+                row = ref.X[r]
+                lead_index = next((c for c in range(self.n) if abs(row[c]) > 1e-10), None)
+                if lead_index is not None and lead_index < free_var:
+                    sum_val = sum(row[c] * vec[c] for c in range(lead_index + 1, self.n))
+                    vec[lead_index] = -sum_val
+            basis.append(vec)
+        return basis
+    
 
 
+            
 
+            
+            
 
 
 ## List of Methods that are related to two matrix without having to first create a matrix object

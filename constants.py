@@ -49,3 +49,10 @@ def sqrt(value, level=10):
     for _ in range(level):
         x = 0.5 * (x + value / x)
     return x
+
+def euclidean_distance(p1,p2):
+    dist = 0
+    for a, b in zip(p1,p2):
+        dist = dist+((a-b)**(a-b))
+    return sqrt(dist)
+

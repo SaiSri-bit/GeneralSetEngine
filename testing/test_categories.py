@@ -9,6 +9,7 @@ from categories.Graph import grph
 from categories.Group import grp, Operation
 from categories.TopologicalSpace import top
 from categories.MeasurableSpace import meas
+from categories.matrix import Matrix
 
 class TestCategories(unittest.TestCase):
     ## Category Module Tests
@@ -62,7 +63,7 @@ class TestCategories(unittest.TestCase):
         t = top(s, open_sets)
         self.assertEqual(t.X, [0, 1])
         self.assertEqual(t.topology, open_sets)
-        
+
     ### Top class tests
 
 
@@ -70,6 +71,20 @@ class TestCategories(unittest.TestCase):
     ## MeasurableSpace Module Tests
 
     ### Meas Class Tests
+
+
+    ### Matrix tests
+    def testVerifyRowEchelon(self):
+        testMatrix = [[8,7,1,3],[11,0,4,19],[0,10,6,2]]
+        correct = [[1.0,0.0,0.0,1.0],[0.0,1.0,0.0,-1.0],[0.0,0.0,1.0,2.0]]
+        self.assertEqual(Matrix(matrix=testMatrix).row_echelon_form().X,correct)
+
+
+    def VerifyRank(self):
+        testMatrix = [[1,2,3],[4,5,6],[7,8,9]]
+        self.assertEqual(Matrix(testMatrix).rank(),2)
+
+
 
 
 
