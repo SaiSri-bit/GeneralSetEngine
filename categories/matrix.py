@@ -2,6 +2,8 @@ from .Category import Object
 
 class Matrix(Object):
     def __init__(self,m:int=-1,n:int=-1,matrix:list=None,val=0):
+        self.rankValue = -1
+        self.nullityValue = -1
         if m != -1 and n!=-1:
             matrix = []
             self.m = m
@@ -178,7 +180,28 @@ class Matrix(Object):
         for row in ref.X:
             if any(abs(x) > 1e-10 for x in row):
                 r=r+1
+        self.rankValue = r
         return r
+    
+    def rowSpace_basis(self):
+        rowSpaceMatrix = self.row_echelon_form()
+        index = 0 
+        for row in rowSpaceMatrix.X:
+            if not (any(abs(x) > 1e-10 for x in row)):
+                rowSpaceMatrix.deleteRow(index=index)
+            index=index+1
+        return rowSpaceMatrix
+    
+    def columnSpace_basis(self):
+        convertColumns = Matrix(matrix=self.findTranspose())
+        columnSpaceMatrix = convertColumns.row_echelon_form()
+        index = 0 
+        for row in columnSpaceMatrix.X:
+            if not (any(abs(x) > 1e-10 for x in row)):
+                columnSpaceMatrix.deleteRow(index=index)
+            index=index+1
+        return columnSpaceMatrix
+
     
     def nullity(self):
         return self.n-self.rank()

@@ -13,6 +13,6 @@ class met(object):
     def verifyDistance(self):
         for element1 in self.X:
             for element2 in self.X:
-                if self.distances.get([element1,element2])!= self.distanceOperation.apply(element1,element2):
+                if self.distances.get((element1,element2))!= self.distanceOperation.apply(element1,element2):
                     return False
         return True

@@ -1,5 +1,5 @@
 from .Set import Set, function
-from .Category import Object
+from .Category import Object,Operation
 import random
 
 class vectk(Object):
@@ -107,4 +107,8 @@ class vectk(Object):
         return super().returnObject()
     
 class linearMaps(function):
-    pass
+    def __init__(self, map:dict=None,inputVS:vectk=None, operation:Operation=None):
+        if map!=None:
+            super().__init__(map)
+        elif (inputVS!=None) and (operation!=None):
+            pass
